@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mind Reader App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        #main-content {
+            width: 300px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        input {
+            padding: 10px;
+            width: 80%;
+            margin-top: 20px;
+            font-size: 16px;
+            text-align: center;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        #loading-text {
+            display: none;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        #reset-button {
+            display: none;
+            margin-top: 20px;
+            background-color: #007bff;
+        }
+        #invention-credit {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        #invention-credit a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        #invention-credit a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main-content">
+        <h2 id="title-text">Think of a number between 1 and 10</h2>
+        <input type="text" id="number-input" placeholder="Enter your number" />
+        <button id="read-mind-button" onclick="startMindReading()">Read My Mind</button>
+
+        <div id="loading-text"></div>
+        <button id="reset-button" onclick="resetApp()">Reset</button>
+
+        <!-- Invention Credit Section -->
+        <div id="invention-credit">
+            This is a huge invention of <a href="http://shafeeq" target="_blank">Shafeeq Gigyani</a>.
+        </div>
+    </div>
+
+    <script>
+        function startMindReading() {
+            // Get the input value
+            const number = document.getElementById('number-input').value;
+
+            if (!number || isNaN(number) || number < 1 || number > 10) {
+                alert('Please enter a valid number between 1 and 10!');
+                return;
+            }
+
+            // Hide the input field, button, and title during the loading process
+            document.getElementById('title-text').style.display = 'none';
+            document.getElementById('number-input').style.display = 'none';
+            document.getElementById('read-mind-button').style.display = 'none';
+
+            // Show the loading steps
+            const loadingText = document.getElementById('loading-text');
+            loadingText.style.display = 'block';
+
+            const steps = [
+                'Analysing brainwaves...',
+                'Scanning memories...',
+                'Calculating probabilities...',
+                'Decoding thoughts...'
+            ];
+
+            let currentStep = 0;
+            const interval = setInterval(() => {
+                if (currentStep < steps.length) {
+                    loadingText.textContent = steps[currentStep];
+                    currentStep++;
+                } else {
+                    clearInterval(interval);
+                    // After loading, reveal the number
+                    revealResult(number);
+                }
+            }, 1000);
+        }
+
+        function revealResult(number) {
+            // Show the final result and hide input elements
+            document.getElementById('loading-text').textContent = `The number you're thinking of is ${number}!`;
+
+            // Show the reset button
+            document.getElementById('reset-button').style.display = 'inline-block';
+        }
+
+        function resetApp() {
+            // Reset the app back to the initial state
+            document.getElementById('number-input').value = '';
+            document.getElementById('number-input').style.display = 'inline-block';
+            document.getElementById('read-mind-button').style.display = 'inline-block';
+            document.getElementById('loading-text').style.display = 'none';
+            document.getElementById('reset-button').style.display = 'none';
+            document.getElementById('title-text').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
